@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
-import { View, Platform, Text } from 'react-native';
+import { View, Platform, Image } from 'react-native';
 import { STATUS_BAR_HEIGHT } from '../constants';
+import icon from '../assets/icons/pure-icon.png';
+import Expo from 'expo';
+
+const cacheImages = images => {
+  return images.map(image => {
+    if (typeof image === 'string')return image.prefetch(image);
+
+    return Expo.Asset.fromModule(image).downloadAsync();
+  })
+}
 
 class MainScreen extends Component {
   static navigationOptions = () => ({
-    title: 'Capo Keys',
+    title: 'Capo Translate',
     headerStyle: {
       height: Platform.OS === 'android' ? 54 + STATUS_BAR_HEIGHT : 54,
       backgroundColor: '#2196F3'
@@ -13,8 +23,28 @@ class MainScreen extends Component {
       marginTop: Platform.OS === 'android' ? STATUS_BAR_HEIGHT : 0,
       color: 'white'
     },
-    headerLeft: <View><Text>I</Text></View>
+    headerLeft: (
+      <Image 
+        source={icon}
+        style={styles.imageStyle}
+      />
+    )
+    
   });
+
+  state = {
+    appIsReady: false
+  }
+
+  componentWillMount(){
+    this._loadAssetsAsync();
+  }
+
+  async _loadAssetsAsync() {
+    const imageAssets = cacheImages([icon]);
+    await Promise.all([...imageAssets]);
+    this.setState({appIsReady: true});
+  }
 
   render() {
     return (
@@ -28,3 +58,12 @@ class MainScreen extends Component {
 }
 
 export default MainScreen;
+
+const styles = {
+  imageStyle: {
+    marginTop: 20,
+    marginLeft: 10,
+    width: 40,
+    height: 40
+  }
+}
