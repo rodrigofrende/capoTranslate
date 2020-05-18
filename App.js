@@ -7,14 +7,15 @@ import { createStackNavigator } from 'react-navigation-stack';
 import store from './store';
 import MainScreen from './screens/MainScreen';
 
-class HomeScreen extends Component {
+class App extends Component {
   render() {
     
 
     return (
       <Provider store={store}>
-        <MainNavigator></MainNavigator>
-      </Provider>
+          <MainNavigator></MainNavigator>        
+      </Provider>,
+      document.getElementById('root')
     );
   }
 }

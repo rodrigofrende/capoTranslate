@@ -3,11 +3,11 @@ import { View, Platform, Image } from 'react-native';
 import { STATUS_BAR_HEIGHT } from '../constants';
 import icon from '../assets/icons/pure-icon.png';
 import Expo from 'expo';
+import KeysButtons from '../components/KeysButtons';
 
 const cacheImages = images => {
   return images.map(image => {
     if (typeof image === 'string')return image.prefetch(image);
-
     return Expo.Asset.fromModule(image).downloadAsync();
   })
 }
@@ -49,9 +49,7 @@ class MainScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#ddd' }}>
-        {/* Chord Modal */}
-
-        {/* Content */}
+        <KeysButtons/>
       </View>
     );
   }
