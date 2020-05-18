@@ -13,7 +13,7 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-          <MainNavigator></MainNavigator>        
+          <MainNavigator/>       
       </Provider>,
       document.getElementById('root')
     );

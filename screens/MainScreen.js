@@ -3,6 +3,8 @@ import { View, Platform, Image } from 'react-native';
 import { STATUS_BAR_HEIGHT } from '../constants';
 import icon from '../assets/icons/pure-icon.png';
 import Expo from 'expo';
+import { Provider } from 'react-redux';
+import store from '../store';
 import KeysButtons from '../components/KeysButtons';
 
 const cacheImages = images => {
@@ -48,9 +50,12 @@ class MainScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#ddd' }}>
-        <KeysButtons/>
-      </View>
+      <Provider store={store}>
+        <View style={{ flex: 1, backgroundColor: '#ddd' }}>
+          <KeysButtons/>
+        </View>
+      </Provider>
+      
     );
   }
 }

@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { View, Dimensions } from 'react-native';
 import { Text , ButtonGroup } from 'react-native-elements' 
 import { connect } from 'react-redux';
-//import { selectKeyIndex } from '../actions';
+import { selectKeyIndex } from '../actions';
 
 const SCREEN_WIDTH  =   Dimensions.get('window').width;
 
 class KeysButtons extends Component {
     render(){
-        // const keys = this.props.keys;
-        // const selectedKeyIndex = this.props.selectedValues.selectedKeyIndex
-        //const { selectedValues: { selectedKeyIndex}, keys } = this.props
-        //const KeyButtons = keys.map(key => (key.shortKey ? '/' : [key.key]));
+
+        const { selectedValues: { selectedKeyIndex}, keys } = this.props;   
+        const KeyButtons = keys.map(key => (key.shortKey ? '/' : [key.key]));
         const {
             containerStyle,
             buttonStyle,
@@ -21,15 +20,15 @@ class KeysButtons extends Component {
         return (
             <View style={{ justifyContent: 'center', alignItems: 'center'}}>
                 <Text h3>Key</Text>
-                <Text h1 style={{ marginBottom:2 }}>C</Text>
-                {/* <ButtonGroup   
-                    //onPress={ index => this.props.selectKeyIndex(index)}
-                    //selectedIndex ={selectedKeyIndex}
-                    //buttons={KeyButtons}                 
+                <Text h1 style={{ marginBottom:2 }}>{keys[selectedKeyIndex].key}</Text>
+                <ButtonGroup   
+                    onPress={ index => this.props.selectKeyIndex(index)}
+                    selectedIndex ={selectedKeyIndex}
+                    buttons={KeyButtons}                 
                     containerStyle={containerStyle}
                     buttonStyle={buttonStyle}
                     selectedTextStyle={selectedTextStyle}
-                /> */}
+                />
             </View>
         )
     }
@@ -51,4 +50,4 @@ const styles = {
 
 const mapStateToProps = ({ keys , selectedValues}) => ({ keys, selectedValues })
 
-export default KeysButtons;
+export default  connect(mapStateToProps , {selectKeyIndex})(KeysButtons);
