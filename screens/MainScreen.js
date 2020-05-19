@@ -6,6 +6,7 @@ import Expo from 'expo';
 import { Provider } from 'react-redux';
 import store from '../store';
 import KeysButtons from '../components/KeysButtons';
+import CapoButtons from '../components/CapoButtons';
 
 const cacheImages = images => {
   return images.map(image => {
@@ -53,6 +54,7 @@ class MainScreen extends Component {
       <Provider store={store}>
         <View style={{ flex: 1, backgroundColor: '#ddd' }}>
           <KeysButtons/>
+          <CapoButtons/>
         </View>
       </Provider>
       
