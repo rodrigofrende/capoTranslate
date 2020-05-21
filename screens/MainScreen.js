@@ -8,7 +8,9 @@ import { Provider } from 'react-redux';
 import store from '../store';
 import KeysButtons from '../components/KeysButtons';
 import CapoButtons from '../components/CapoButtons';
+import ViewChordsButton from '../components/ViewChordsButton';
 import CapoKey from '../components/CapoKey';
+import ChordsModal from '../modals/ChordsModal';
 
 const cacheImages = images => {
   return images.map(image => {
@@ -46,24 +48,27 @@ class MainScreen extends Component {
   }
 
   async _loadAssetsAsync() {
+    //debugger revisar porque tira undefined , y la imagen es un 24 ???? s
     const imageAssets = cacheImages([icon]);
     await Promise.all([...imageAssets]);
     this.setState({appIsReady: true});
   }
 
   render() {
-    const { containerStyle , dividerStyle } = styles;
+    const { containerStyle , dividerStyle , buttonContainerStyle} = styles;
 
     return (
       <Provider store={store}>
         <View style={{ flex: 1, backgroundColor: '#ddd' }}>
+          <ChordsModal />
           <View style={containerStyle}>
             <KeysButtons/>
             <Divider style={dividerStyle}/>
             <CapoButtons/>
             <Divider style={dividerStyle}/>
             <CapoKey/>
-          </View>       
+          </View>   
+          <ViewChordsButton style={buttonContainerStyle}/>    
         </View>
       </Provider>
       
@@ -88,6 +93,12 @@ const styles = {
   dividerStyle: {
     width: SCREEN_WIDTH * 0.9,
     backgroundColor: '#2196F3'
+  },
+  buttonContainerStyle: {
+    width: SCREEN_WIDTH,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 10
   }
 };
 
